@@ -14,6 +14,10 @@ server.addService(ShipService, {
     // logout: shipHandler.logout,
     // forgotPassword: shipHandler.forgotPassword,
     // resetPassword: shipHandler.resetPassword,
+  health: shipHandler.health,
+  status: shipHandler.status,
+  livez: shipHandler.livez,
+  readyz: shipHandler.readyz,
 });
 
 export default server;

@@ -1,96 +1,64 @@
 import * as grpc from '@grpc/grpc-js';
-import * as ShipGrpc from '../../generated/ship';
-import * as shipService from '../../services/ship.service';
+import * as ShipGrpc from '../../generated/auth';
+import * as heathService from '../../services/health.service';
 
+export const callbackError = (callback: grpc.sendUnaryData<any>, err: unknown) => {
+  const message = err instanceof Error ? err.message : 'Unknown error';
+  callback({ code: grpc.status.INTERNAL, message }, null);
+};
 
-// export const register = async (
-//     call: grpc.ServerUnaryCall<ShipGrpc.RegisterRequest, ShipGrpc.ShipResponse>,
-//     callback: grpc.sendUnaryData<ShipGrpc.ShipResponse>
-// ) => {
-//     const { email, password } = call.request;
-//
-//     try {
-//         await shipService.createUser(email, password);
-//
-//         const result = await shipService.login(email, password);
-//
-//         callback(null, {
-//             accessToken: result.accessToken?? '',
-//             refreshToken: result.refreshToken?? '',
-//             userId: result.userId,
-//         });
-//
-//     } catch (err: any) {
-//         callback({
-//             code: grpc.status.INTERNAL,
-//             message: err.message,
-//         }, null);
-//     }
-// };
-//
-// export const login = async (
-//     call: grpc.ServerUnaryCall<ShipGrpc.LoginRequest, ShipGrpc.ShipResponse>,
-//     callback: grpc.sendUnaryData<ShipGrpc.ShipResponse>
-// ) => {
-//     const { email, password } = call.request;
-//
-//     try {
-//         const result = await shipService.login(email, password);
-//
-//         callback(null, {
-//             accessToken: result.accessToken?? '',
-//             refreshToken: result.refreshToken?? '',
-//             userId: result.userId,
-//         });
-//
-//     } catch (err: any) {
-//         callback({
-//             code: grpc.status.INTERNAL,
-//             message: err.message,
-//         }, null);
-//     }
-// };
-//
-// export const refreshTokens = async (
-//     call: grpc.ServerUnaryCall<ShipGrpc.RefreshTokensRequest, ShipGrpc.RefreshTokensResponse>,
-//     callback: grpc.sendUnaryData<ShipGrpc.RefreshTokensResponse>
-// ) => {
-//     const { token } = call.request;
-//
-//     try {
-//         const tokens = await shipService.refreshTokens(token);
-//
-//         callback(null, {
-//             accessToken: tokens.accessToken?? '',
-//             refreshToken: tokens.refreshToken?? '',
-//         });
-//
-//     } catch (err: any) {
-//         callback({
-//             code: grpc.status.INTERNAL,
-//             message: err.message,
-//         }, null);
-//     }
-// };
-//
-// export const logout = async (
-//     call: grpc.ServerUnaryCall<ShipGrpc.LogoutRequest, ShipGrpc.LogoutResponse>,
-//     callback: grpc.sendUnaryData<ShipGrpc.LogoutResponse>
-// ) => {
-//     const { userId } = call.request;
-//
-//     try {
-//         await shipService.logout(userId);
-//
-//         callback(null, {
-//             success: true,
-//             message: 'Logged out successfully',
-//         });
-//
-//     } catch (err: any) {
-//         callback({
-//             code: grpc.status.INTERNAL,
-//             message: err.message,
-//         }, null);
-//     }
-// };
+export const health = async (
+  call: grpc.ServerUnaryCall<ShipGrpc.Empty, ShipGrpc.HealthReport>,
+  callback: grpc.sendUnaryData<ShipGrpc.HealthReport>
+) => {
+  try {
+    const response = await heathService.health();
+
+    callback(null, response);
+
+  } catch (err: any) {
+    callbackError(callback, err);
+  }
+};
+
+export const status = async (
+  call: grpc.ServerUnaryCall<ShipGrpc.Empty, ShipGrpc.StatusInfo>,
+  callback: grpc.sendUnaryData<ShipGrpc.StatusInfo>
+) => {
+  try {
+    const response = await heathService.status();
+
+    callback(null, response);
+
+  } catch (err: any) {
+    callbackError(callback, err);
+  }
+};
+
+export const livez = async (
+  call: grpc.ServerUnaryCall<ShipGrpc.Empty, ShipGrpc.LiveStatus>,
+  callback: grpc.sendUnaryData<ShipGrpc.LiveStatus>
+) => {
+  try {
+    const response = await heathService.livez();
+
+    callback(null, response);
+
+  } catch (err: any) {
+    callbackError(callback, err);
+  }
+};
+
+export const readyz = async (
+  call: grpc.ServerUnaryCall<ShipGrpc.Empty, ShipGrpc.ReadyStatus>,
+  callback: grpc.sendUnaryData<ShipGrpc.ReadyStatus>
+) => {
+  try {
+    const response = await heathService.readyz();
+
+    callback(null, response);
+
+  } catch (err: any) {
+    callbackError(callback, err);
+  }
+};
