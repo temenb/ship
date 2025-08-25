@@ -11,12 +11,13 @@ COPY services/ship/package*.json ./services/ship/
 COPY services/ship/jest.config.js ./services/ship/
 COPY services/ship/tsconfig.json ./services/ship/
 COPY services/ship/src ./services/ship/src/
+COPY services/ship/prisma ./services/ship/prisma/
 COPY services/ship/__tests__ ./services/ship/__tests__/
 
 USER root
-RUN chown -R node:node /usr/src/app
 
 RUN corepack enable && pnpm install
+RUN chown -R node:node /usr/src/app
 
 USER node
 
