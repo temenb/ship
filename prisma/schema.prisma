@@ -3,19 +3,13 @@ generator client {
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Ship {
   id             String   @id @default(uuid())
-  email          String   @unique
-  password       String?
-  accessToken    String?
-  refreshToken   String?
-  googleId       String?  @unique
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }

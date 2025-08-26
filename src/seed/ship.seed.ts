@@ -1,4 +1,5 @@
 import * as shipService from '../services/ship.service';
+import logger from '@shared/logger';
 
 export async function seedShip() {
     // // const existing = await db.user.findMany();
@@ -7,6 +8,6 @@ export async function seedShip() {
     // for (let i= 0; i < 100; i++) {
     //     await authService.createUser(`test${i}@test.com`, '123123');
     // }
-    // console.log('👤 Users are created');
+    // logger.log('👤 Users are created');
 }
 

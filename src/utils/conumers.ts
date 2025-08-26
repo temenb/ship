@@ -1,18 +1,18 @@
 import config from "../config/config";
 // import {upsertProfile} from "../services/profile.service";
-import logger from "./logger";
+import logger from '@shared/logger';
 
 export async function initConsumers() {
   // await consumeEvent(config.kafkaTopicUserCreated, async ({topic, partition, message}): Promise<void> => {
   //   try {
   //     const rawValue = message.value?.toString();
   //     if (!rawValue) {
-  //       console.warn(`[Kafka] Empty message on topic=${topic}, partition=${partition}`);
+  //       logger.warn(`[Kafka] Empty message on topic=${topic}, partition=${partition}`);
   //       return;
   //     }
   //
   //     const payload = JSON.parse(rawValue);
-  //     console.log(`[Kafka] Message consumed`, {
+  //     logger.log(`[Kafka] Message consumed`, {
   //       topic,
   //       partition,
   //       offset: message.offset,
@@ -25,7 +25,7 @@ export async function initConsumers() {
   //
   //     // Здесь можно добавить бизнес-логику обработки payload
   //   } catch (error) {
-  //     console.error(`[Kafka] Failed to process message`, {
+  //     logger.error(`[Kafka] Failed to process message`, {
   //       topic,
   //       partition,
   //       offset: message.offset,
